@@ -29,13 +29,6 @@ Las variables predictoras incluyen características como edad, género, estatura
 
 A partir de esta información, el proyecto plantea un problema de clasificación supervisada multiclase, en el cual los modelos deberán aprender las relaciones existentes entre las variables de entrada y las siete categorías de la variable objetivo.
 
-Para abordar el problema se propone estudiar y comparar dos enfoques principales:
-
-1. **Machine Learning clásico:** Algoritmos basados en árboles de decisión y técnicas de ensamble, como LightGBM, XGBoost y CatBoost, capaces de identificar relaciones no lineales e interacciones entre variables.
-2. **Deep Learning:** Arquitecturas de redes neuronales adaptadas a datos tabulares, como TabNet y redes neuronales densas (MLP), que permiten aprender representaciones y relaciones complejas a partir de las características disponibles.
-
-Adicionalmente, se plantea explorar técnicas de combinación de modelos (*Ensemble Learning*), con el propósito de aprovechar las fortalezas de diferentes algoritmos y evaluar si su integración permite mejorar el desempeño de la clasificación.
-
 Es importante considerar que el conjunto de datos contiene registros originales y registros generados sintéticamente mediante técnicas de sobremuestreo. Por esta razón, será necesario implementar estrategias de entrenamiento y validación que eviten la fuga de información (*Data Leakage*) y permitan obtener resultados experimentales confiables.
 
 De esta manera, el proyecto busca desarrollar una solución computacional que permita estudiar la capacidad predictiva de diferentes algoritmos y comprender qué características tienen mayor relación con los niveles de obesidad.
@@ -110,7 +103,7 @@ El propósito es construir una solución experimental fundamentada en datos, que
 
 ---
 
-## 1. RESUMEN EJECUTIVO (ABSTRACT)
+## 3.1. RESUMEN EJECUTIVO (ABSTRACT)
 
 El presente informe consolida la revisión crítica del Estado del Arte y expone de manera formal la **Propuesta de Solución Metodológica y Algorítmica** para el problema de clasificación multiclase de 7 niveles de obesidad a partir del conjunto de datos de Palechor y de la Hoz Manotas (UCI Machine Learning Repository, $N = 2,111$).
 
@@ -124,9 +117,9 @@ Como aporte sustancial e innovador de este proyecto, se diseña y formula una **
 
 ---
 
-## 2. CONTEXTUALIZACIÓN DEL PROBLEMA Y DATASET OFICIAL
+## 3.2. CONTEXTUALIZACIÓN DEL PROBLEMA Y DATASET OFICIAL
 
-### 2.1. Naturaleza y Estructura del Conjunto de Datos
+### 3.2.1. Naturaleza y Estructura del Conjunto de Datos
 El dataset oficial comprende **2,111 registros** y **17 atributos** (16 variables predictoras continuas, ordinales y nominales, más 1 variable objetivo multiclase `NObeyesdad`).
 
 ```mermaid
@@ -138,7 +131,7 @@ flowchart TD
     Preds --> Life["3. Actividad y Estilo de Vida:\nSMOKE (Tabaco), FAF (Ejercicio),\nTUE (Pantallas), CALC (Alcohol),\nMTRANS (Medio de Transporte)"]
 ```
 
-### 2.2. Las 7 Categorías Clínicas Objetivo (`NObeyesdad`)
+### 3.2.2. Las 7 Categorías Clínicas Objetivo (`NObeyesdad`)
 La variable dependiente categoriza a los individuos de acuerdo con los umbrales estándar de la OMS:
 1. `Insufficient_Weight` (Bajo peso: IMC $< 18.5$)
 2. `Normal_Weight` (Peso normal: $18.5 \le \text{IMC} < 25.0$)
@@ -150,9 +143,9 @@ La variable dependiente categoriza a los individuos de acuerdo con los umbrales 
 
 ---
 
-## 3. AUDITORÍA CRÍTICA DE LA LITERATURA PREVIA
+## 4. AUDITORÍA CRÍTICA DE LA LITERATURA PREVIA
 
-### 3.1. Génesis del Dataset y la Fuga de Datos por SMOTE Pre-Split
+### 4.1. Génesis del Dataset y la Fuga de Datos por SMOTE Pre-Split
 En el artículo original (*Data in Brief*, 2019), Palechor y de la Hoz Manotas recolectaron **498 encuestas reales (23.6%)** en Colombia, México y Perú. Para corregir el desbalance de clases nativo, aplicaron en la herramienta Weka el algoritmo **SMOTE**, sintetizando 1,613 registros adicionales hasta totalizar 2,111 observaciones.
 
 #### El Vicio Metodológico del Pre-Split Over-Sampling:
@@ -164,12 +157,12 @@ Al aplicar SMOTE globalmente sobre la matriz $\mathbf{X}$ **antes** de particion
 2. Los modelos memorizan la vecindad euclidiana, arrojando precisiones artificiales del $97\% - 98.5\%$.
 3. Además, SMOTE generó **decimales continuos irreales** sobre variables que originalmente eran escalas enteras o Likert discretas en la encuesta (p. ej., `FCVC = 2.418`, `FAF = 0.573`), actuando como huellas digitales estocásticas (*fingerprints*) que facilitaron la memorización algorítmica.
 
-### 3.2. La Frontera SOTA Real: Kaggle Playground Series s4e2 (2024)
+### 4.2. La Frontera SOTA Real: Kaggle Playground Series s4e2 (2024)
 En la competencia internacional Kaggle s4e2 (más de 3,700 participantes evaluados sobre conjuntos de prueba ciegos *hold-out* sin fuga de datos), la cota máxima demostrada se sitúa estrictamente en **$91.5\% - 92.2\%$ de Accuracy**. Cualquier resultado superior en este dominio con datos comparables evidencia sobreajuste o fuga metodológica.
 
 ---
 
-## 4. PROPUESTA FORMAL DE SOLUCIÓN: ARQUITECTURA HÍBRIDA SUPERVISADA (ML + DL)
+## 5. PROPUESTA FORMAL DE SOLUCIÓN: ARQUITECTURA HÍBRIDA SUPERVISADA (ML + DL)
 
 Para responder a las exigencias académicas y construir una solución técnica de alto impacto, se propone una **arquitectura modular de dos ramas supervisadas concurrentes**:
 
@@ -211,9 +204,9 @@ flowchart TD
 
 ---
 
-## 5. DESGLOSE TÉCNICO DE LOS MODELOS SUPERVISADOS
+## 6. DESGLOSE TÉCNICO DE LOS MODELOS SUPERVISADOS
 
-### 5.1. Rama Machine Learning: Ensambles de Árboles (GBDT)
+### 6.1. Rama Machine Learning: Ensambles de Árboles (GBDT)
 
 #### A. LightGBM (Light Gradient Boosting Machine)
 * **Fundamentación Teórica:** Implementa un crecimiento de árboles guiado por hojas (*leaf-wise*) con límite de profundidad, maximizando la reducción de pérdida en cada división.
@@ -233,7 +226,7 @@ flowchart TD
 
 ---
 
-### 5.2. Rama Deep Learning: Arquitecturas Neuronales para Datos Tabulares
+### 6.2. Rama Deep Learning: Arquitecturas Neuronales para Datos Tabulares
 
 #### A. TabNet (Arik & Pfister, Google Cloud AI)
 * **Fundamentación Teórica:** TabNet es la arquitectura de Deep Learning estado del arte concebida específicamente para superar la brecha estructural frente a los árboles de decisión en datos tabulares.
@@ -254,7 +247,7 @@ flowchart TD
 
 ---
 
-### 5.3. Meta-Ensamble por Apilamiento (Stacking de Nivel 2)
+### 6.3. Meta-Ensamble por Apilamiento (Stacking de Nivel 2)
 
 Para explotar la complementariedad entre los límites ortogonales de los árboles de decisión (GBDT) y las representaciones continuas suaves de las redes neuronales (Deep Learning):
 
@@ -272,7 +265,7 @@ Para explotar la complementariedad entre los límites ortogonales de los árbole
 
 ---
 
-## 6. EL PARADIGMA METODOLÓGICO DE BENCHMARK DUAL
+## 7. EL PARADIGMA METODOLÓGICO DE BENCHMARK DUAL
 
 Para asegurar que el proyecto no sea una aplicación superficial de algoritmos, se formula formalmente el **Paradigma de Benchmark Dual**:
 
@@ -296,7 +289,7 @@ Para asegurar que el proyecto no sea una aplicación superficial de algoritmos, 
 
 ---
 
-## 7. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
+## 8. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
 
 | Estudio / Referencia | Modelos Evaluados | Paradigma | Metodología de Validación | Métricas Reportadas | Sesgos / Diagnóstico Metodológico |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -309,7 +302,7 @@ Para asegurar que el proyecto no sea una aplicación superficial de algoritmos, 
 
 ---
 
-## 8. REFERENCIAS BIBLIOGRÁFICAS (FORMATO IEEE / APA)
+## 9. REFERENCIAS BIBLIOGRÁFICAS (FORMATO IEEE / APA)
 
 1. **Palechor, F. M., & de la Hoz Manotas, A. (2019).** Dataset for estimation of obesity levels based on eating habits and physical condition in Colombia, Peru and Mexico. *Data in Brief*, 25, 104344. https://doi.org/10.1016/j.dib.2019.104344
 2. **De-La-Hoz-Correa, E., Mendoza-Palechor, F., De-La-Hoz-Manotas, A., Morales-Ortega, R., & Sánchez-Bohórquez, A. (2019).** Obesity Level Estimation Software based on Decision Trees. *Journal of Computer Science*, 15(1), 67-77. https://doi.org/10.3844/jcssp.2019.67.77
