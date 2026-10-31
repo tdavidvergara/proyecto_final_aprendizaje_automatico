@@ -1,4 +1,7 @@
 # PROYECTO FINAL: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE MACHINE LEARNING Y DEEP LEARNING
+**Integrantes:** Sebastián Giraldo, Violeta España, Luis Murillo, Juan David Velasco & David Vergara  
+**Dataset Oficial:** *Estimation of obesity levels based on eating habits and physical condition* (UCI Machine Learning Repository / Kaggle Playground Series s4e2)  
+**Fecha:** Octubre de 2026  
 
 ## 1. INTRODUCCIÓN: DESCRIPCIÓN DEL PROBLEMA
 
@@ -103,20 +106,7 @@ El propósito es construir una solución experimental fundamentada en datos, que
 **Nota sobre el alcance:** Los modelos desarrollados tendrán un propósito académico y experimental. Sus resultados no deben interpretarse como diagnósticos médicos ni como herramientas clínicas validadas para tomar decisiones sobre la salud de una persona.
 
 
-## Revisión bibliográfica
-
-## Diagrama esquemático de la propuesta
-
-## Explicación del dataset
-poner el link del cuaderno
-
-
-# INFORME DEL ESTADO DEL ARTE Y PROPUESTA DE SOLUCIÓN: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE APRENDIZAJE SUPERVISADO CLÁSICO (MACHINE LEARNING) Y PROFUNDO (DEEP LEARNING)
-
-**Proyecto Final:** Aprendizaje Automático  
-**Integrantes:** Sebastián Giraldo, Violeta España, Luis Murillo, Juan David Velasco & David Vergara  
-**Dataset Oficial:** *Estimation of obesity levels based on eating habits and physical condition* (UCI Machine Learning Repository / Kaggle Playground Series s4e2)  
-**Fecha:** Octubre de 2026  
+# 3. INFORME DEL ESTADO DEL ARTE Y PROPUESTA DE SOLUCIÓN: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE APRENDIZAJE SUPERVISADO CLÁSICO (MACHINE LEARNING) Y PROFUNDO (DEEP LEARNING)
 
 ---
 
