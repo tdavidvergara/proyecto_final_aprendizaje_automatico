@@ -215,7 +215,7 @@ Construir un modelo que estime el nivel de obesidad de una persona (las 7 clases
 flowchart LR
     A["1. Datos<br/>UCI id 544<br/>2.111 registros<br/>7 clases"] --> B["2. Limpieza<br/>Duplicados<br/>Escalas enteras"]
     B --> C{"3. Benchmark dual"}
-    C --> P["Preventivo (principal)<br/>Hábitos + antecedentes<br/>Sin peso, altura ni IMC"]
+    C --> P["Preventivo (principal)<br/>Hábitos, antecedentes<br/>y edad/género<br/>Sin peso, altura ni IMC"]
     C --> O["Operativo (referencia)<br/>Todas las variables + IMC<br/>Mide el efecto de la fuga"]
     P --> M["4. Modelos<br/>Regresión logística<br/>Random Forest<br/>XGBoost<br/>MLP"]
     O --> M
@@ -247,11 +247,12 @@ Los mismos modelos se entrenan **dos veces**, con distintos conjuntos de variabl
 
 | | Preventivo (principal) | Operativo (referencia) |
 | :---- | :---- | :---- |
-| **Variables** | `FAVC`, `FCVC`, `NCP`, `CAEC`, `CH2O`, `SCC`, `FAF`, `TUE`, `CALC`, `MTRANS`, `SMOKE`, `family_history_with_overweight` + balance `FAF / (TUE + 1)` | Todas las variables + IMC (`Peso / Estatura²`) + ratio de hidratación (`CH2O / Peso`) + balance `FAF / (TUE + 1)` |
+| **Variables** | `Gender`, `Age`, `FAVC`, `FCVC`, `NCP`, `CAEC`, `CH2O`, `SCC`, `FAF`, `TUE`, `CALC`, `MTRANS`, `SMOKE`, `family_history_with_overweight` + balance `FAF / (TUE + 1)` (17 columnas tras la codificación, sin contar ese balance) | Todas las variables + IMC (`Peso / Estatura²`) + ratio de hidratación (`CH2O / Peso`) + balance `FAF / (TUE + 1)` (20 columnas tras la codificación, sin contar los dos ratios) |
 | **Peso y estatura** | **Excluidos**, ni directos ni derivados | Incluidos |
 | **Pregunta que responde** | ¿Qué hábitos predicen la obesidad antes de que se manifieste? | ¿Cuánto “hace trampa” el modelo cuando ve el IMC? |
 
 - **Regla de variables derivadas:** toda variable calculada a partir del peso o la estatura (IMC, ratio de hidratación) va **solo** al benchmark operativo. Si llegara al preventivo, el modelo podría reconstruir el peso y la fuga volvería a entrar.
+- **Edad y género:** `Gender` y `Age` están en ambos benchmarks como variables demográficas de control. No se calculan con el peso ni la estatura, así que no introducen fuga, y permiten ver si los hábitos pesan más allá de quién es la persona.
 - **Por qué es necesario:** la clase objetivo se define con el IMC (sección 3.2.2). Con peso y estatura, el modelo solo recalcula esa fórmula. Una prueba preliminar mostró una diferencia de ~9 puntos de accuracy entre ambos benchmarks, lo que confirma el impacto de la fuga.
 
 ### 4.3.4. Modelos
@@ -267,8 +268,9 @@ Se comparan cuatro enfoques de complejidad creciente:
 
 **Preprocesamiento (dentro del *pipeline* de cada pliegue):**
 
-- Codificación ordinal de `CAEC` y `CALC` (no = 0, Sometimes = 1, Frequently = 2, Always = 3).
-- One-hot de `MTRANS` y de las variables binarias.
+- Variables binarias (`Gender`, `family_history_with_overweight`, `FAVC`, `SMOKE`, `SCC`) a 0/1.
+- Codificación ordinal de `CAEC` y `CALC` (no = 0, Sometimes = 1, Frequently = 2, Always = 3). En `CALC`, "Always" se une a "Frequently" porque tiene un solo registro, así que llega hasta 2.
+- One-hot de `MTRANS`, uniendo `Bike` y `Motorbike` en `Two_Wheels` (7 y 11 casos).
 - Escalado con `RobustScaler` para la regresión logística y el MLP.
 - Todo se ajusta **solo con los datos de entrenamiento** de cada pliegue, para que la información de prueba no se filtre.
 
