@@ -1,3 +1,116 @@
+# PROYECTO FINAL: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE MACHINE LEARNING Y DEEP LEARNING
+
+## 1. INTRODUCCIÓN: DESCRIPCIÓN DEL PROBLEMA
+
+La obesidad representa uno de los principales desafíos de salud pública a nivel mundial debido a su relación con diversas enfermedades crónicas y sus implicaciones en la calidad de vida de las personas. Su desarrollo es un fenómeno multifactorial en el que intervienen diferentes elementos, entre ellos los hábitos alimenticios, la actividad física, los antecedentes familiares, las condiciones metabólicas y los comportamientos asociados al estilo de vida.
+
+Tradicionalmente, la evaluación del estado nutricional se ha apoyado en indicadores antropométricos como el Índice de Masa Corporal (IMC), calculado a partir de la relación entre el peso y la estatura de una persona. Este indicador permite establecer categorías generales de clasificación del peso corporal. Sin embargo, el estudio de la obesidad requiere considerar diferentes factores que pueden estar relacionados con su aparición y evolución, especialmente cuando se busca comprender la influencia de los hábitos y las condiciones individuales.
+
+En este contexto, surge la necesidad de explorar herramientas computacionales que permitan analizar grandes cantidades de información, identificar patrones y establecer relaciones entre diferentes características de los individuos. El aprendizaje automático (Machine Learning) ofrece alternativas para abordar este tipo de problemas mediante algoritmos capaces de aprender a partir de datos históricos y generar predicciones sobre nuevas observaciones.
+
+El problema específico que aborda este proyecto consiste en **determinar si es posible estimar los niveles de obesidad de una persona a partir de sus características físicas, antecedentes familiares, hábitos alimenticios y comportamientos relacionados con su estilo de vida, utilizando modelos de aprendizaje automático y aprendizaje profundo**.
+
+Para desarrollar esta investigación se utilizará el conjunto de datos denominado *Estimation of Obesity Levels Based on Eating Habits and Physical Condition*, disponible en el repositorio de la Universidad de California en Irvine (UCI Machine Learning Repository). Este conjunto de datos contiene 2.111 registros de individuos provenientes de Colombia, México y Perú, con información relacionada con sus características demográficas, condiciones físicas y hábitos cotidianos.
+
+El conjunto está compuesto por 16 variables predictoras y una variable objetivo denominada `NObeyesdad`, encargada de representar siete categorías:
+
+- **Insufficient Weight:** Bajo peso.
+- **Normal Weight:** Peso normal.
+- **Overweight Level I:** Sobrepeso grado I.
+- **Overweight Level II:** Sobrepeso grado II.
+- **Obesity Type I:** Obesidad tipo I.
+- **Obesity Type II:** Obesidad tipo II.
+- **Obesity Type III:** Obesidad tipo III.
+
+Las variables predictoras incluyen características como edad, género, estatura, peso y antecedentes familiares de sobrepeso. También contemplan información sobre el consumo de alimentos con alto contenido calórico, frecuencia de consumo de vegetales, número de comidas diarias, consumo de agua, actividad física, tiempo frente a dispositivos electrónicos y otros comportamientos relacionados con el estilo de vida.
+
+A partir de esta información, el proyecto plantea un problema de clasificación supervisada multiclase, en el cual los modelos deberán aprender las relaciones existentes entre las variables de entrada y las siete categorías de la variable objetivo.
+
+Para abordar el problema se propone estudiar y comparar dos enfoques principales:
+
+1. **Machine Learning clásico:** Algoritmos basados en árboles de decisión y técnicas de ensamble, como LightGBM, XGBoost y CatBoost, capaces de identificar relaciones no lineales e interacciones entre variables.
+2. **Deep Learning:** Arquitecturas de redes neuronales adaptadas a datos tabulares, como TabNet y redes neuronales densas (MLP), que permiten aprender representaciones y relaciones complejas a partir de las características disponibles.
+
+Adicionalmente, se plantea explorar técnicas de combinación de modelos (*Ensemble Learning*), con el propósito de aprovechar las fortalezas de diferentes algoritmos y evaluar si su integración permite mejorar el desempeño de la clasificación.
+
+Es importante considerar que el conjunto de datos contiene registros originales y registros generados sintéticamente mediante técnicas de sobremuestreo. Por esta razón, será necesario implementar estrategias de entrenamiento y validación que eviten la fuga de información (*Data Leakage*) y permitan obtener resultados experimentales confiables.
+
+De esta manera, el proyecto busca desarrollar una solución computacional que permita estudiar la capacidad predictiva de diferentes algoritmos y comprender qué características tienen mayor relación con los niveles de obesidad.
+
+## 2. MOTIVACIÓN: IMPORTANCIA DEL PROBLEMA
+
+La importancia de este proyecto se fundamenta en la necesidad de comprender mejor los factores asociados con la obesidad y explorar cómo las herramientas de inteligencia artificial pueden contribuir al análisis de información relacionada con la salud.
+
+La obesidad no depende exclusivamente de una característica física. Por el contrario, está relacionada con múltiples factores que interactúan entre sí, como la alimentación, la actividad física, los antecedentes familiares y las condiciones individuales. Esta complejidad hace que el análisis conjunto de diferentes variables sea especialmente relevante para identificar patrones y estudiar posibles relaciones entre los comportamientos cotidianos y las categorías de peso corporal.
+
+Desde una perspectiva de salud pública, identificar estos patrones puede contribuir a comprender mejor los factores asociados con el desarrollo de la obesidad y aportar información que sirva como apoyo en el diseño de estrategias de educación, prevención y promoción de hábitos saludables.
+
+### 2.1. Importancia desde la perspectiva de la salud pública
+
+La obesidad está asociada con un mayor riesgo de desarrollar diferentes enfermedades crónicas, entre ellas la diabetes tipo 2, las enfermedades cardiovasculares y algunos trastornos metabólicos.
+
+Por esta razón, comprender los factores relacionados con los diferentes niveles de obesidad es importante para fortalecer las iniciativas orientadas a la promoción de estilos de vida saludables.
+
+El análisis de variables como la frecuencia de actividad física, los hábitos alimenticios, el consumo de agua y el tiempo dedicado a actividades sedentarias permite estudiar cómo estos comportamientos se relacionan con las categorías de obesidad presentes en el conjunto de datos.
+
+De esta manera, el proyecto busca aportar una perspectiva analítica que permita comprender mejor las relaciones entre los hábitos cotidianos y las condiciones físicas de los individuos.
+
+### 2.2. Importancia desde la perspectiva tecnológica
+
+El desarrollo de este proyecto también representa una oportunidad para aplicar técnicas de inteligencia artificial a un problema real de interés social.
+
+Los algoritmos de Machine Learning permiten procesar múltiples variables simultáneamente, identificar relaciones no lineales y construir modelos de clasificación a partir de patrones presentes en los datos.
+
+A su vez, las técnicas de Deep Learning permiten explorar arquitecturas neuronales capaces de aprender representaciones más complejas de la información.
+
+La comparación entre ambos enfoques permitirá estudiar sus ventajas, limitaciones y capacidad de generalización en un problema de clasificación multiclase.
+
+Además, el uso de técnicas de aprendizaje por ensamble permitirá investigar si la combinación de diferentes modelos puede aprovechar sus capacidades individuales y mejorar el rendimiento de las predicciones.
+
+### 2.3. Importancia del análisis de los hábitos y el estilo de vida
+
+Uno de los aspectos más relevantes de esta investigación es estudiar la contribución de los hábitos alimenticios y los comportamientos cotidianos en la estimación de los niveles de obesidad.
+
+Aunque variables como el peso y la estatura ofrecen información directa sobre la condición física de una persona, resulta interesante investigar qué capacidad predictiva tienen otras características, como:
+
+- Frecuencia de consumo de alimentos con alto contenido calórico.
+- Consumo habitual de vegetales.
+- Número de comidas realizadas durante el día.
+- Consumo diario de agua.
+- Frecuencia de actividad física.
+- Tiempo dedicado a dispositivos electrónicos.
+- Hábitos de consumo de alcohol y tabaco.
+- Antecedentes familiares de sobrepeso.
+
+### 2.4. Importancia académica y aporte del proyecto
+
+Desde el ámbito académico, esta investigación permite integrar conocimientos de estadística, análisis exploratorio de datos, procesamiento de información, clasificación supervisada, optimización de modelos y evaluación de algoritmos.
+
+Asimismo, ofrece la oportunidad de realizar una comparación experimental entre diferentes paradigmas de aprendizaje automático, utilizando métricas como Accuracy, Precision, Recall y F1-Score, con especial atención al desempeño de cada modelo en las siete categorías.
+
+Otro aspecto importante será la interpretación de los resultados mediante técnicas de explicabilidad, que permitan identificar cuáles variables tienen mayor influencia en las predicciones y comprender mejor el comportamiento de los modelos.
+
+El proyecto también busca destacar la importancia de una metodología experimental rigurosa. No se trata únicamente de conseguir un porcentaje elevado de exactitud, sino de garantizar que los resultados sean obtenidos mediante una validación adecuada, sin contaminación entre los conjuntos de entrenamiento y evaluación.
+
+### 2.5. Propósito final
+
+En conjunto, esta investigación busca demostrar cómo las técnicas de Machine Learning y Deep Learning pueden utilizarse para analizar información relacionada con los hábitos alimenticios, las condiciones físicas y los niveles de obesidad.
+
+Más allá de desarrollar un modelo con un buen rendimiento predictivo, se pretende comprender las capacidades y limitaciones de los diferentes algoritmos, identificar las variables más relevantes y evaluar la influencia de las características biométricas y los hábitos de vida en el proceso de clasificación.
+
+El propósito es construir una solución experimental fundamentada en datos, que permita explorar el potencial de la inteligencia artificial en problemas relacionados con la salud y generar conocimiento sobre las relaciones existentes entre el estilo de vida y las categorías de obesidad.
+
+**Nota sobre el alcance:** Los modelos desarrollados tendrán un propósito académico y experimental. Sus resultados no deben interpretarse como diagnósticos médicos ni como herramientas clínicas validadas para tomar decisiones sobre la salud de una persona.
+
+
+## Revisión bibliográfica
+
+## Diagrama esquemático de la propuesta
+
+## Explicación del dataset
+poner el link del cuaderno
+
+
 # INFORME DEL ESTADO DEL ARTE Y PROPUESTA DE SOLUCIÓN: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE APRENDIZAJE SUPERVISADO CLÁSICO (MACHINE LEARNING) Y PROFUNDO (DEEP LEARNING)
 
 **Proyecto Final:** Aprendizaje Automático  
