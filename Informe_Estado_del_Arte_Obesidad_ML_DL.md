@@ -166,74 +166,7 @@ En la competencia internacional Kaggle s4e2 (más de 3,700 participantes evaluad
 
 ---
 
-## 3.4. PROPUESTA FORMAL DE SOLUCIÓN: ARQUITECTURA HÍBRIDA SUPERVISADA (ML \+ DL)
-
-Para responder a las exigencias académicas y construir una solución técnica de alto impacto, se propone una arquitectura modular de dos ramas supervisadas concurrentes:
-
-1. Ingesta y Preprocesamiento In-Fold:  
-   - Partición mediante Validación Cruzada Estratificada de 5 Pliegues (Stratified 5-Fold).  
-   - Escalado robusto con RobustScaler y codificación ordinal de variables jerárquicas (CAEC y CALC: no \= 0, Sometimes \= 1, Frequently \= 2, Always \= 3).  
-2. Ingeniería de Características Biofísicas:  
-   - BMI Canónico \= Peso / (Estatura^2)  
-   - Ratio de Hidratación por Biomasa \= CH2O / Peso  
-   - Balance Actividad Física vs. Sedentarismo \= FAF / (TUE \+ 1.0)  
-3. Rama Machine Learning Clásico (GBDT):  
-   - LightGBM (Crecimiento Leaf-wise y algoritmo GOSS).  
-   - XGBoost (Histograma regularizado con penalizaciones L1 y L2).  
-   - CatBoost (Ordered Boosting y árboles simétricos).  
-4. Rama Deep Learning Tabular:  
-   - TabNet (Atención dispersa secuencial con Sparsemax).  
-   - Tabular MLP (Perceptrón Multicapa con capas de Entity Embeddings, Batch Normalization y Dropout).  
-5. Meta-Ensamble por Apilamiento (Stacking de Nivel 2):  
-   - Extracción de probabilidades cruzadas Out-Of-Fold (OOF) de las 7 clases para los 5 modelos (Matriz Z de dimensión N x 35).  
-   - Meta-clasificador lineal penalizado (Ridge / Regresión Logística L2).  
-   - Post-procesamiento mediante optimización Simplex Nelder-Mead para calibrar multiplicadores de frontera y resolver la confusión entre clases adyacentes (Overweight I vs. II y Overweight II vs. Obesity I).  
-6. Validación con Benchmark Dual:  
-   - Benchmark A (Operativo): Incluye peso, altura e IMC calculado (Meta: 91.5% \- 92.2% de Accuracy).  
-   - Benchmark B (Clínico-Preventivo): Excluye peso y altura para medir la capacidad predictiva pura de los hábitos de vida sin Target Leakage (Rendimiento esperado: 80% \- 82%).
-
----
-
-## 3.5. DESGLOSE TÉCNICO DE LOS MODELOS SUPERVISADOS
-
-### 3.5.1. Rama Machine Learning: Ensambles de Árboles (GBDT)
-
-A. LightGBM (Light Gradient Boosting Machine)
-
-- Crecimiento de árboles guiado por hojas (leaf-wise) con restricción de profundidad máxima.  
-- Muestreo unilateral por gradientes (GOSS), conservando instancias con altos gradientes de error y muestreando las de bajo gradiente para acelerar el cómputo sin perder precisión.  
-- Minimización de la entropía cruzada multiclase en las 7 categorías ponderales.
-
-B. XGBoost (Extreme Gradient Boosting)
-
-- Optimización analítica de segundo orden mediante expansión de Taylor.  
-- Regularización estructural explícita L1 (alpha) y L2 (lambda) sobre los pesos de las hojas para mitigar la varianza inducida por los datos sintetizados con SMOTE.  
-- Particionamiento acelerado por histogramas continuos.
-
-C. CatBoost (Categorical Boosting)
-
-- Algoritmo de Ordered Boosting que previene el sesgo de estimación del gradiente en conjuntos tabulares de tamaño mediano.  
-- Árboles simétricos (oblivious trees) donde la misma regla de decisión se aplica a todo un nivel de profundidad, actuando como un regularizador implícito frente a patrones ruidosos.  
-- Codificación nativa de variables categóricas mediante Target Statistics dinámicas.
-
-### 3.5.2. Rama Deep Learning: Arquitecturas Neuronales para Datos Tabulares
-
-A. TabNet (Google Cloud AI)
-
-- Diseñado para superar a las redes neuronales estándar en datos tabulares combinando aprendizaje profundo con la interpretabilidad de los árboles de decisión.  
-- Mecanismo de Atención Dispersa Secuencial (Sparsemax): En cada paso de decisión s, un transformador de atención genera una máscara dinámica que selecciona qué variables inspeccionar, penalizando el reuso excesivo de factores ya evaluados.  
-- Bloques de procesamiento con Gated Linear Units (GLU) y conexiones residuales normalizadas.  
-- Interpretabilidad Nativa: Entrega matrices de asignación de atención que permiten identificar visualmente qué variables determinaron la predicción de cada paciente.
-
-B. Tabular MLP con Entity Embeddings
-
-- Capas de Embeddings: Variables nominales (MTRANS) y ordinales (CAEC, CALC) se proyectan a vectores continuos densos, permitiendo que la red aprenda relaciones geométricas de proximidad entre hábitos.  
-- Bloques Densos Residuales: 3 capas ocultas (128, 64 y 32 neuronas) con activaciones LeakyReLU / Mish, capas de Batch Normalization y Dropout (0.25) para prevenir la coadaptación de neuronas.  
-- Optimizador AdamW con decaimiento de pesos y programador de tasa de aprendizaje por recocido de coseno (Cosine Annealing).
-
----
-
-## 3.6. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
+## 3.4. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
 
 | Estudio / Referencia | Modelos Evaluados | Paradigma | Validación | Métricas Reportadas | Diagnóstico Metodológico |
 | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -246,7 +179,7 @@ B. Tabular MLP con Entity Embeddings
 
 ---
 
-## 3.7. REFERENCIAS BIBLIOGRÁFICAS
+## 3.5. REFERENCIAS BIBLIOGRÁFICAS
 
 1. Palechor, F. M., & de la Hoz Manotas, A. (2019). Dataset for estimation of obesity levels based on eating habits and physical condition in Colombia, Peru and Mexico. Data in Brief, 25, 104344\.  
 2. De-La-Hoz-Correa, E., Mendoza-Palechor, F., De-La-Hoz-Manotas, A., Morales-Ortega, R., & Sánchez-Bohórquez, A. (2019). Obesity Level Estimation Software based on Decision Trees. Journal of Computer Science, 15(1), 67-77.  
@@ -262,3 +195,112 @@ B. Tabular MLP con Entity Embeddings
 12. Murickan, A., & Toma, M. (2024). Behavioral Lifestyle Factors Versus Medical History in Determining the Predictive Power of Machine Learning-Based Obesity Classification. Technologies, 12(5), 64\.  
 13. Kaggle. (2024). Multi-Class Prediction of Obesity Risk. Kaggle Playground Series \- Season 4, Episode 2\.  
 14. World Health Organization (WHO). (2024). Obesity and overweight fact sheet. WHO Media Centre, Geneva.
+
+
+---
+
+# 4. PROPUESTA DE SOLUCIÓN Y DIAGRAMA ESQUEMÁTICO
+
+## 4.1. OBJETIVO
+
+Construir un modelo que estime el nivel de obesidad de una persona (las 7 clases de `NObeyesdad`) e identifique qué hábitos modificables influyen más, de forma que **generalice honestamente**: sin fuga de datos y con el sobreajuste controlado.
+
+> **Pregunta guía:** ¿Cómo construimos un modelo que generalice sin hacer trampa?
+
+---
+
+## 4.2. DIAGRAMA ESQUEMÁTICO
+
+```mermaid
+flowchart LR
+    A["1. Datos<br/>UCI id 544<br/>2.111 registros<br/>7 clases"] --> B["2. Limpieza<br/>Duplicados<br/>Escalas enteras"]
+    B --> C{"3. Benchmark dual"}
+    C --> P["Preventivo (principal)<br/>Hábitos + antecedentes<br/>Sin peso, altura ni IMC"]
+    C --> O["Operativo (referencia)<br/>Todas las variables + IMC<br/>Mide el efecto de la fuga"]
+    P --> M["4. Modelos<br/>Regresión logística<br/>Random Forest<br/>XGBoost<br/>MLP"]
+    O --> M
+    M --> E["5. Evaluación<br/>Accuracy<br/>F1 macro<br/>Matriz de confusión"]
+    E --> S["6. SHAP<br/>Hábitos que más<br/>influyen por clase"]
+```
+
+**Reglas comunes a los pasos 3 a 5:** *pipeline* ajustado dentro de cada pliegue (RobustScaler + codificación) · validación cruzada estratificada de 5 pliegues · semilla 20 (la misma del cuaderno de EDA).
+
+---
+
+## 4.3. DESCRIPCIÓN DE CADA ETAPA
+
+### 4.3.1. Datos
+
+- **Fuente:** dataset original de UCI (id 544), cargado con `ucimlrepo`, igual que en el cuaderno `Desarrollo.ipynb`. No se usa el CSV del repositorio, que tiene los decimales dañados (por ejemplo, `1.616.366` en vez de `1.616366`).
+- **Variable objetivo:** las 7 clases de `NObeyesdad`, sin agrupar (ver sección 3.2.2).
+
+### 4.3.2. Limpieza
+
+| Acción | Qué se hace | Por qué |
+| :---- | :---- | :---- |
+| Duplicados | Se eliminan los registros repetidos (2.111 → 2.087) | Evita que la misma persona quede en entrenamiento y en prueba al mismo tiempo |
+| Escalas enteras | Se redondean `FCVC`, `NCP`, `CH2O`, `FAF` y `TUE` al entero más cercano | En la encuesta eran respuestas enteras; los decimales (p. ej. `FCVC = 2.418`) son huellas de SMOTE que el modelo podría memorizar (ver sección 3.3.1) |
+
+### 4.3.3. Benchmark dual (núcleo de la propuesta)
+
+Los mismos modelos se entrenan **dos veces**, con distintos conjuntos de variables, y se comparan:
+
+| | Preventivo (principal) | Operativo (referencia) |
+| :---- | :---- | :---- |
+| **Variables** | `FAVC`, `FCVC`, `NCP`, `CAEC`, `CH2O`, `SCC`, `FAF`, `TUE`, `CALC`, `MTRANS`, `SMOKE`, `family_history_with_overweight` + balance `FAF / (TUE + 1)` | Todas las variables + IMC (`Peso / Estatura²`) + ratio de hidratación (`CH2O / Peso`) + balance `FAF / (TUE + 1)` |
+| **Peso y estatura** | **Excluidos**, ni directos ni derivados | Incluidos |
+| **Pregunta que responde** | ¿Qué hábitos predicen la obesidad antes de que se manifieste? | ¿Cuánto “hace trampa” el modelo cuando ve el IMC? |
+
+- **Regla de variables derivadas:** toda variable calculada a partir del peso o la estatura (IMC, ratio de hidratación) va **solo** al benchmark operativo. Si llegara al preventivo, el modelo podría reconstruir el peso y la fuga volvería a entrar.
+- **Por qué es necesario:** la clase objetivo se define con el IMC (sección 3.2.2). Con peso y estatura, el modelo solo recalcula esa fórmula. Una prueba preliminar mostró una diferencia de ~9 puntos de accuracy entre ambos benchmarks, lo que confirma el impacto de la fuga.
+
+### 4.3.4. Modelos
+
+Se comparan cuatro enfoques de complejidad creciente:
+
+| Modelo | Cómo aprende | Papel en el proyecto |
+| :---- | :---- | :---- |
+| **Regresión logística** | Asigna un peso a cada hábito y suma (p. ej., comer hipercalórico +, hacer ejercicio −) | Línea base: si un modelo complejo no la supera, no se justifica |
+| **Random Forest** | Cientos de árboles de decisión entrenados por separado que votan la clase | Ensamble robusto y poco sensible al ruido |
+| **XGBoost** | Árboles en secuencia: cada uno corrige los errores del anterior, con regularización L1/L2 (ver referencia 5) | Suele ser el mejor en datos tabulares |
+| **MLP** | Red neuronal densa (capas ocultas, activación ReLU, *Dropout* y *early stopping*) | Representante de Deep Learning |
+
+**Preprocesamiento (dentro del *pipeline* de cada pliegue):**
+
+- Codificación ordinal de `CAEC` y `CALC` (no = 0, Sometimes = 1, Frequently = 2, Always = 3).
+- One-hot de `MTRANS` y de las variables binarias.
+- Escalado con `RobustScaler` para la regresión logística y el MLP.
+- Todo se ajusta **solo con los datos de entrenamiento** de cada pliegue, para que la información de prueba no se filtre.
+
+**Control del sobreajuste:**
+
+- Se compara la accuracy en entrenamiento vs. prueba. En la prueba preliminar, Random Forest sin ajustar se acercó al 100% en entrenamiento, frente a alrededor de 85% en prueba: hay sobreajuste que controlar.
+- Ajuste de hiperparámetros (profundidad máxima, mínimo de muestras por hoja, regularización, tamaño de capas) con validación cruzada.
+
+### 4.3.5. Evaluación
+
+| Métrica | Qué responde | Ejemplo |
+| :---- | :---- | :---- |
+| **Accuracy** | ¿Cuánto acierta en general? | Si acierta con unas 85 de cada 100 personas, la accuracy es de aproximadamente 85% |
+| **F1 macro** | ¿Acierta parejo en todas las clases? | Califica cada clase por separado y promedia; si una clase falla, baja |
+| **Matriz de confusión** | ¿En qué se equivoca? | Muestra qué clases confunde; se espera confusión entre clases vecinas (Sobrepeso I vs. II) |
+
+### 4.3.6. Interpretabilidad con SHAP
+
+- SHAP (ver referencia 7) mide **cuánto aporta cada variable** a cada predicción.
+- Se aplica sobre el benchmark preventivo para obtener un ranking de los hábitos que más empujan hacia cada nivel de obesidad.
+- Es el resultado de mayor valor para salud pública: no solo predecir, sino explicar *por qué*.
+
+### 4.3.7. PCA (visto en clase)
+
+- Proyección 2D (PC1 vs. PC2) coloreada por clase, para visualizar si las clases se separan.
+
+---
+
+## 4.4. PRINCIPIOS DE LA PROPUESTA
+
+| | Principio | Cómo se garantiza |
+| :---- | :---- | :---- |
+| **01.** | **Sin fuga de datos** | El modelo preventivo no ve peso, estatura ni variables derivadas de ellos; el preprocesamiento se ajusta dentro de cada pliegue |
+| **02.** | **Sin sobreajuste** | Validación cruzada, comparación entrenamiento vs. prueba y ajuste de hiperparámetros |
+| **03.** | **Interpretable** | SHAP identifica qué hábitos predicen cada nivel de obesidad |
