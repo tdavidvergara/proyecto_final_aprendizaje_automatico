@@ -103,15 +103,9 @@ El propósito es construir una solución experimental fundamentada en datos, que
 
 ---
 # INFORME DEL ESTADO DEL ARTE Y PROPUESTA DE SOLUCIÓN: ESTIMACIÓN DE NIVELES DE OBESIDAD MEDIANTE APRENDIZAJE SUPERVISADO CLÁSICO (MACHINE LEARNING) Y PROFUNDO (DEEP LEARNING)
-
-**Proyecto Final:** Aprendizaje Automático  
-**Integrantes:** Sebastián Giraldo, Violeta España, Luis Murillo, Juan David Velasco & David Vergara  
-**Dataset Oficial:** Estimation of obesity levels based on eating habits and physical condition (UCI Machine Learning Repository / Kaggle Playground Series s4e2)  
-**Fecha:** Octubre de 2026
-
 ---
 
-## 3.1\. RESUMEN EJECUTIVO
+## 3.1. RESUMEN EJECUTIVO
 
 El presente informe consolida la revisión crítica del Estado del Arte y expone de manera formal la Propuesta de Solución Metodológica y Algorítmica para el problema de clasificación multiclase de 7 niveles de obesidad a partir del conjunto de datos de Palechor y de la Hoz Manotas (UCI Machine Learning Repository, N \= 2,111).
 
@@ -126,7 +120,7 @@ Como aporte sustancial e innovador de este proyecto, se diseña y formula una Pr
 
 ---
 
-## 3.2\. CONTEXTUALIZACIÓN DEL PROBLEMA Y DATASET OFICIAL
+## 3.2. CONTEXTUALIZACIÓN DEL PROBLEMA Y DATASET OFICIAL
 
 ### 3.2.1. Naturaleza y Estructura del Conjunto de Datos
 
@@ -152,7 +146,7 @@ La variable dependiente categoriza a los individuos de acuerdo con los umbrales 
 
 ---
 
-## 3.3\. AUDITORÍA CRÍTICA DE LA LITERATURA PREVIA
+## 3.3. AUDITORÍA CRÍTICA DE LA LITERATURA PREVIA
 
 ### 3.3.1. Génesis del Dataset y la Fuga de Datos por SMOTE Pre-Split
 
@@ -174,7 +168,7 @@ En la competencia internacional Kaggle s4e2 (más de 3,700 participantes evaluad
 
 ---
 
-## 3.4\. PROPUESTA FORMAL DE SOLUCIÓN: ARQUITECTURA HÍBRIDA SUPERVISADA (ML \+ DL)
+## 3.4. PROPUESTA FORMAL DE SOLUCIÓN: ARQUITECTURA HÍBRIDA SUPERVISADA (ML \+ DL)
 
 Para responder a las exigencias académicas y construir una solución técnica de alto impacto, se propone una arquitectura modular de dos ramas supervisadas concurrentes:
 
@@ -202,7 +196,7 @@ Para responder a las exigencias académicas y construir una solución técnica d
 
 ---
 
-## 3.5\. DESGLOSE TÉCNICO DE LOS MODELOS SUPERVISADOS
+## 3.5. DESGLOSE TÉCNICO DE LOS MODELOS SUPERVISADOS
 
 ### 3.5.1. Rama Machine Learning: Ensambles de Árboles (GBDT)
 
@@ -241,7 +235,7 @@ B. Tabular MLP con Entity Embeddings
 
 ---
 
-## 3.6\. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
+## 3.6. MATRIZ COMPARATIVA DEL ESTADO DEL ARTE Y NUESTRA PROPUESTA
 
 | Estudio / Referencia | Modelos Evaluados | Paradigma | Validación | Métricas Reportadas | Diagnóstico Metodológico |
 | :---- | :---- | :---- | :---- | :---- | :---- |
@@ -254,7 +248,7 @@ B. Tabular MLP con Entity Embeddings
 
 ---
 
-## 3.7\. REFERENCIAS BIBLIOGRÁFICAS
+## 3.7. REFERENCIAS BIBLIOGRÁFICAS
 
 1. Palechor, F. M., & de la Hoz Manotas, A. (2019). Dataset for estimation of obesity levels based on eating habits and physical condition in Colombia, Peru and Mexico. Data in Brief, 25, 104344\.  
 2. De-La-Hoz-Correa, E., Mendoza-Palechor, F., De-La-Hoz-Manotas, A., Morales-Ortega, R., & Sánchez-Bohórquez, A. (2019). Obesity Level Estimation Software based on Decision Trees. Journal of Computer Science, 15(1), 67-77.  
