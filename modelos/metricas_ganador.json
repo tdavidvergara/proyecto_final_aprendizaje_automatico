@@ -1,19 +1,22 @@
 {
-  "algoritmo": "RandomForestClassifier (M1)",
-  "preprocesamiento": "P1_RobustScaler",
+  "algoritmo": "XGBClassifier (M2)",
+  "preprocesamiento": "P2_Habitos_YeoJohnson",
   "benchmark": "Preventivo",
-  "accuracy": 0.7895,
-  "f1_macro": 0.7819,
-  "cv_f1_macro": "0.7749 ± 0.0143",
-  "tiempo_fit_s": 0.927,
-  "ms_por_muestra": 0.3261,
-  "tamano_kb": 9955.7,
+  "accuracy": 0.7967,
+  "f1_macro": 0.7939,
+  "cv_f1_macro": "0.7943 ± 0.0114",
+  "tiempo_fit_s": 1.4522,
+  "ms_por_muestra": 0.0393,
+  "tamano_kb": 3444.5,
   "hiperparametros": {
-    "clf__n_estimators": 350,
-    "clf__min_samples_leaf": 2,
-    "clf__max_leaf_nodes": 120,
-    "clf__max_features": "sqrt",
-    "clf__max_depth": null
+    "clf__subsample": 1.0,
+    "clf__reg_lambda": 5.0,
+    "clf__reg_alpha": 0.0,
+    "clf__n_estimators": 200,
+    "clf__min_child_weight": 1,
+    "clf__max_depth": 8,
+    "clf__learning_rate": 0.2,
+    "clf__colsample_bytree": 0.6
   },
   "columnas": [
     "Gender",
@@ -113,5 +116,5 @@
       1.0
     ]
   },
-  "fecha": "2026-11-28 04:56"
+  "fecha": "2026-11-28 06:07"
 }

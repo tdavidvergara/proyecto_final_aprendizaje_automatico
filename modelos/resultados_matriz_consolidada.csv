@@ -1,9 +1,16 @@
 Modelo,Preprocesamiento,Benchmark,CV F1-macro,Train Accuracy,Test Accuracy,Brecha Train-Test,Test F1-macro,Tiempo fit (s),Latencia test (ms),ms / muestra,Tamaño (.pkl KB)
 M1_RandomForest,P1_RobustScaler,Preventivo,0.7749 ± 0.0143,0.8892,0.7895,0.0997,0.7819,0.927,136.303,0.3261,9955.7
 M1_RandomForest,P2_Habitos_YeoJohnson,Preventivo,0.7638 ± 0.0209,0.891,0.7656,0.1254,0.7551,0.7079,97.081,0.2323,7122.7
+M1_RandomForest,P3_Robust_PCA95,Preventivo,0.7505 ± 0.0216,0.9341,0.7656,0.1685,0.7603,0.9726,120.667,0.2887,9958.3
+M2_XGBoost,P1_RobustScaler,Preventivo,0.7942 ± 0.0154,0.9593,0.823,0.1363,0.8203,0.8298,9.672,0.0231,3976.9
+M2_XGBoost,P2_Habitos_YeoJohnson,Preventivo,0.7943 ± 0.0114,0.994,0.7967,0.1974,0.7939,1.4522,16.422,0.0393,3444.5
+M2_XGBoost,P3_Robust_PCA95,Preventivo,0.7589 ± 0.0166,0.9976,0.7536,0.244,0.7518,0.8177,7.453,0.0178,2242.8
 M3_MLP,P1_RobustScaler,Preventivo,0.7421 ± 0.0134,0.9269,0.7656,0.1614,0.7564,9.8446,4.674,0.0112,911.1
 M3_MLP,P2_Habitos_YeoJohnson,Preventivo,0.7491 ± 0.0027,0.8598,0.756,0.1038,0.7518,3.7929,12.937,0.031,937.3
+M3_MLP,P3_Robust_PCA95,Preventivo,0.7381 ± 0.0177,0.9497,0.744,0.2057,0.7362,3.1638,10.625,0.0254,298.2
 M1_RandomForest,P1_RobustScaler,Preventivo (sin Gender),0.7375 ± 0.0076,0.8742,0.744,0.1302,0.7347,0.6499,89.034,0.213,7115.8
 M1_RandomForest,P1_RobustScaler,Operativo (con Peso/Altura/IMC),0.9851 ± 0.0042,0.9994,0.9856,0.0138,0.9853,0.9145,118.973,0.2846,9046.9
+M2_XGBoost,P2_Habitos_YeoJohnson,Preventivo (sin Gender),0.7604 ± 0.0098,0.9874,0.7895,0.1979,0.7867,0.819,15.971,0.0382,3240.1
+M2_XGBoost,P1_RobustScaler,Operativo (con Peso/Altura/IMC),0.9814 ± 0.0052,1.0,0.988,0.012,0.9879,4.2059,10.318,0.0247,2378.8
 M3_MLP,P2_Habitos_YeoJohnson,Preventivo (sin Gender),0.7120 ± 0.0117,0.7849,0.7225,0.0624,0.7153,7.0698,13.739,0.0329,931.1
 M3_MLP,P1_RobustScaler,Operativo (con Peso/Altura/IMC),0.9642 ± 0.0068,0.9946,0.9593,0.0353,0.9586,3.5575,7.053,0.0169,321.3
