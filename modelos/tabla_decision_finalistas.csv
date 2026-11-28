@@ -1,0 +1,4 @@
+Modelo,Mejor Prep (CV),CV F1-macro,Test Accuracy,Test F1-macro,Precision macro,Recall macro,ROC-AUC (OvR),Brecha Tr-Te,F1 sin Gender,Fit (s),ms / muestra,Tamaño (KB)
+M1 · Random Forest,P1_RobustScaler,0.7749 ± 0.0143,0.7895,0.7819,0.7833,0.7867,0.956,0.0997,0.7347,0.9338,0.2631,9955.7
+M2 · XGBoost,P2_Habitos_YeoJohnson,0.7943 ± 0.0114,0.7967,0.7939,0.7948,0.7938,0.9638,0.1974,0.7867,0.6919,0.0571,3444.5
+M3 · MLP,P2_Habitos_YeoJohnson,0.7491 ± 0.0027,0.756,0.7518,0.7533,0.7536,0.9416,0.1038,0.7153,3.5257,0.027,937.3

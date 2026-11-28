@@ -1,12 +1,12 @@
 {
-  "algoritmo": "XGBClassifier (M2)",
+  "algoritmo": "M2_XGBoost",
   "preprocesamiento": "P2_Habitos_YeoJohnson",
   "benchmark": "Preventivo",
   "accuracy": 0.7967,
   "f1_macro": 0.7939,
   "cv_f1_macro": "0.7943 ± 0.0114",
-  "tiempo_fit_s": 1.4522,
-  "ms_por_muestra": 0.0393,
+  "tiempo_fit_s": 0.6919,
+  "ms_por_muestra": 0.0571,
   "tamano_kb": 3444.5,
   "hiperparametros": {
     "clf__subsample": 1.0,
@@ -116,5 +116,5 @@
       1.0
     ]
   },
-  "fecha": "2026-11-28 06:07"
+  "fecha": "2026-11-28 07:17"
 }
