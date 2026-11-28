@@ -1,0 +1,117 @@
+{
+  "algoritmo": "RandomForestClassifier (M1)",
+  "preprocesamiento": "P1_RobustScaler",
+  "benchmark": "Preventivo",
+  "accuracy": 0.7895,
+  "f1_macro": 0.7819,
+  "cv_f1_macro": "0.7749 ± 0.0143",
+  "tiempo_fit_s": 0.927,
+  "ms_por_muestra": 0.3261,
+  "tamano_kb": 9955.7,
+  "hiperparametros": {
+    "clf__n_estimators": 350,
+    "clf__min_samples_leaf": 2,
+    "clf__max_leaf_nodes": 120,
+    "clf__max_features": "sqrt",
+    "clf__max_depth": null
+  },
+  "columnas": [
+    "Gender",
+    "Age",
+    "family_history_with_overweight",
+    "FAVC",
+    "FCVC",
+    "NCP",
+    "CAEC",
+    "SMOKE",
+    "CH2O",
+    "SCC",
+    "FAF",
+    "TUE",
+    "CALC",
+    "MTRANS_Automobile",
+    "MTRANS_Public_Transportation",
+    "MTRANS_Two_Wheels",
+    "MTRANS_Walking"
+  ],
+  "clases": {
+    "0": "Insufficient_Weight",
+    "1": "Normal_Weight",
+    "2": "Overweight_Level_I",
+    "3": "Overweight_Level_II",
+    "4": "Obesity_Type_I",
+    "5": "Obesity_Type_II",
+    "6": "Obesity_Type_III"
+  },
+  "rangos": {
+    "Gender": [
+      0.0,
+      1.0
+    ],
+    "Age": [
+      14.0,
+      61.0
+    ],
+    "family_history_with_overweight": [
+      0.0,
+      1.0
+    ],
+    "FAVC": [
+      0.0,
+      1.0
+    ],
+    "FCVC": [
+      1.0,
+      3.0
+    ],
+    "NCP": [
+      1.0,
+      4.0
+    ],
+    "CAEC": [
+      0.0,
+      3.0
+    ],
+    "SMOKE": [
+      0.0,
+      1.0
+    ],
+    "CH2O": [
+      1.0,
+      3.0
+    ],
+    "SCC": [
+      0.0,
+      1.0
+    ],
+    "FAF": [
+      0.0,
+      3.0
+    ],
+    "TUE": [
+      0.0,
+      2.0
+    ],
+    "CALC": [
+      0.0,
+      2.0
+    ],
+    "MTRANS_Automobile": [
+      0.0,
+      1.0
+    ],
+    "MTRANS_Public_Transportation": [
+      0.0,
+      1.0
+    ],
+    "MTRANS_Two_Wheels": [
+      0.0,
+      1.0
+    ],
+    "MTRANS_Walking": [
+      0.0,
+      1.0
+    ]
+  },
+  "fecha": "2026-11-28 04:56"
+}
