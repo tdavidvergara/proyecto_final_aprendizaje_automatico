@@ -5,7 +5,9 @@ UI copy is in Spanish because the end users are Spanish speakers.
 """
 from __future__ import annotations
 
+import tkinter
 from dataclasses import dataclass
+from tkinter import messagebox
 from typing import Any, Callable, Dict, List, Optional
 
 import customtkinter as ctk
@@ -239,6 +241,9 @@ class ObesityApp(ctk.CTk):
         except ValueError as error:
             self.result_label.configure(text=f"Entrada no válida: {error}", text_color=HIGHLIGHT_COLOR)
             return None
+        except Exception as error:  # keep the window usable and tell the user what failed
+            self.result_label.configure(text=f"No se pudo clasificar: {error}", text_color=HIGHLIGHT_COLOR)
+            return None
         self._show(result)
         return result
 
@@ -285,8 +290,29 @@ class ObesityApp(ctk.CTk):
             self.classify()
 
 
+def load_error_message() -> Optional[str]:
+    """Load the model and metadata up front; return a Spanish error message if that fails."""
+    try:
+        core.load_metadata()
+        core.load_model()
+    except Exception as error:  # any load failure must reach the user, not a silent crash
+        return (
+            "No se pudo cargar el modelo de clasificación.\n\n"
+            f"Archivos esperados:\n{core.MODEL_PATH}\n{core.METADATA_PATH}\n\n"
+            f"Detalle: {type(error).__name__}: {error}"
+        )
+    return None
+
+
 def main() -> None:
     """Entry point for `uv run app`."""
+    error = load_error_message()
+    if error is not None:
+        root = tkinter.Tk()
+        root.withdraw()
+        messagebox.showerror(WINDOW_TITLE, error, parent=root)
+        root.destroy()
+        return
     app = ObesityApp()
     app.mainloop()
 
