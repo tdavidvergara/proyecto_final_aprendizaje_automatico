@@ -141,3 +141,49 @@ def test_predict_matches_pipeline_predict():
     model = core.load_model()
     expected = core.class_names()[int(model.predict(core.encode(SAMPLE_PROFILE))[0])]
     assert core.predict(SAMPLE_PROFILE).label == expected
+
+
+# Regression snapshot, NOT independent ground truth: neither Notebook_Matriz.ipynb nor
+# docs/GUIA_DESPLIEGUE_INTERFAZ.md publishes a per-profile prediction to compare against.
+# These values were recorded from the retrained winner (metricas_ganador.json fecha
+# 2026-11-28 07:17) and catch accidental changes to encoding, loading or the pickle itself.
+OBESE_PROFILE = {
+    **SAMPLE_PROFILE, "Gender": "Female", "Age": 26, "FCVC": 3, "CH2O": 1, "FAF": 0, "TUE": 0,
+}
+SNAPSHOTS = [
+    (SAMPLE_PROFILE, "Normal_Weight", [0.0003, 0.7463, 0.0078, 0.1036, 0.0022, 0.1394, 0.0004]),
+    (OBESE_PROFILE, "Obesity_Type_III", [0.0001, 0.0008, 0.0003, 0.0002, 0.0018, 0.0007, 0.9961]),
+]
+
+
+@pytest.mark.parametrize("profile, label, probabilities", SNAPSHOTS)
+def test_prediction_regression_snapshot(profile, label, probabilities):
+    result = core.predict(profile)
+    assert result.label == label
+    assert list(result.probabilities.values()) == pytest.approx(probabilities, abs=1e-3)
+
+
+def test_booster_rebuilt_from_model_section_predicts_identically(monkeypatch):
+    """Force the Windows fallback on the real winner's booster and compare predictions."""
+    import pickle
+
+    import xgboost
+    from xgboost.core import Booster
+
+    pipeline = core.load_model()
+    booster = pipeline.named_steps["clf"].get_booster()
+    features = xgboost.DMatrix(pipeline[:-1].transform(core.encode(SAMPLE_PROFILE)))
+    expected = booster.predict(features)
+    pickled = pickle.dumps(booster)
+    assert core._SERIALIZED_MODEL_KEY in pickled
+
+    def corrupted_stream(self, state):
+        raise xgboost.core.XGBoostError("input stream corrupted")
+
+    monkeypatch.setattr(Booster, "__setstate__", corrupted_stream)
+    with core._portable_xgboost_unpickling():
+        rebuilt = pickle.loads(pickled)
+    assert Booster.__setstate__ is corrupted_stream  # the context restores what it replaced
+    monkeypatch.undo()
+
+    assert rebuilt.predict(features).tolist() == expected.tolist()
