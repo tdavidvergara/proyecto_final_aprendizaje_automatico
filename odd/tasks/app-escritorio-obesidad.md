@@ -28,6 +28,10 @@ The team needs a usable front for the final project. The repo already exports th
 - [x] T2 — `app_obesidad/app.py`: CustomTkinter GUI with inputs driven by `metricas_ganador.json` ranges, Classify/Reset, probability bars for the 7 classes, model info sidebar.
 - [x] T3 — `pyproject.toml` (`[project.scripts] app = ...`), `uv run app` works; README section "App de escritorio".
 
+- [ ] T4 — Integrate `origin/develop` commit `459b490` (Sebastián, 2026-11-28: retrained `modelo_ganador.pkl` pickled with P2 functions in `__main__`, `docs/GUIA_DESPLIEGUE_INTERFAZ.md`): merge into this branch, resolve the `README.md` conflict keeping both sections, adapt `core.py` to register `agregar_habitos` / `nombres_con_habitos` in `__main__` before unpickling (per the guide), keep the Windows booster fallback only if still needed, tests green. Reason: the new pickle fails to load (`Can't get attribute 'agregar_habitos' on <module '__main__'>`, 3 tests fail).
+- [ ] T5 — Review follow-ups that harden the model swap: golden prediction test from an independent source (notebook output) if available, direct test for the booster fallback if it remains, GUI shows a readable error when the model cannot load.
+- [ ] T6 — Delivery: push `feat/app-escritorio` and open a PR into `develop` (user delegated push/PR to the agent on 2026-11-28).
+
 ## Acceptance criteria
 
 - `uv run pytest` passes (existing + new tests).
@@ -40,6 +44,7 @@ The team needs a usable front for the final project. The repo already exports th
 ## Delivery
 
 - Forecast ~450 authored lines. Strategy: ask-on-risk; no PR is being created now, so the chain question is deferred to PR time.
+- 2026-11-28: user delegated push/PR. Strategy `exception-ok`, single PR into `develop`: the app is one coherent unit (~700 authored lines; `uv.lock` is generated), and reviewers are classmates, not a chained-review team.
 
 ## Open notes
 
