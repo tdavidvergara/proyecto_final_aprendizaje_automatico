@@ -175,7 +175,9 @@ def encode(profile: Mapping[str, Any]) -> pd.DataFrame:
 
     row["Age"] = float(profile["Age"])
     for column in ORDINAL_SCALES:
-        row[column] = int(round(float(profile[column])))
+        value = float(profile[column])
+        _check_range(column, value)  # before rounding, so e.g. 3.4 is not accepted as 3
+        row[column] = int(round(value))
 
     row["CAEC"] = _lookup("CAEC", profile["CAEC"], FREQUENCY_ORDER)
     calc = CALC_MERGES.get(profile["CALC"], profile["CALC"])

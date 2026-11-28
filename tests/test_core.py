@@ -101,6 +101,8 @@ def test_survey_scales_are_rounded_to_integers():
     ("NCP", 5),
     ("TUE", 3),
     ("FCVC", 0),
+    ("FCVC", 3.4),  # would round to 3 (in range) if rounding ran before the range check
+    ("FAF", -0.4),  # would round to 0 (in range)
 ])
 def test_out_of_range_values_are_rejected(field, value):
     with pytest.raises(ValueError):
