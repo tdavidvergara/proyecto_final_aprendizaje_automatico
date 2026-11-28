@@ -20,6 +20,8 @@ app = "app_obesidad.app:main"
 
 [dependency-groups]
 dev = ["pytest>=8"]
+# Only for scripts/evaluar_app.py (downloads the UCI dataset and plots the confusion matrix).
+eval = ["ucimlrepo>=0.0.7", "matplotlib>=3.9"]
 
 [build-system]
 requires = ["hatchling"]

@@ -1,0 +1,162 @@
+{
+  "split": {
+    "dataset": "UCI 544",
+    "deduplicated": true,
+    "test_size": 0.2,
+    "stratified": true,
+    "random_state": 20
+  },
+  "rows_evaluated": 418,
+  "rows_rejected": 0,
+  "accuracy": 0.7967,
+  "f1_macro": 0.7939,
+  "notebook_accuracy": 0.7967,
+  "notebook_f1_macro": 0.7939,
+  "ms_per_person": 17.67,
+  "per_class": {
+    "Insufficient_Weight": {
+      "precision": 0.857,
+      "recall": 0.792,
+      "f1-score": 0.824,
+      "support": 53.0
+    },
+    "Normal_Weight": {
+      "precision": 0.679,
+      "recall": 0.667,
+      "f1-score": 0.673,
+      "support": 57.0
+    },
+    "Overweight_Level_I": {
+      "precision": 0.707,
+      "recall": 0.745,
+      "f1-score": 0.726,
+      "support": 55.0
+    },
+    "Overweight_Level_II": {
+      "precision": 0.683,
+      "recall": 0.707,
+      "f1-score": 0.695,
+      "support": 58.0
+    },
+    "Obesity_Type_I": {
+      "precision": 0.765,
+      "recall": 0.743,
+      "f1-score": 0.754,
+      "support": 70.0
+    },
+    "Obesity_Type_II": {
+      "precision": 0.889,
+      "recall": 0.933,
+      "f1-score": 0.911,
+      "support": 60.0
+    },
+    "Obesity_Type_III": {
+      "precision": 0.984,
+      "recall": 0.969,
+      "f1-score": 0.977,
+      "support": 65.0
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "Insufficient_Weight",
+      "Normal_Weight",
+      "Overweight_Level_I",
+      "Overweight_Level_II",
+      "Obesity_Type_I",
+      "Obesity_Type_II",
+      "Obesity_Type_III"
+    ],
+    "matrix": [
+      [
+        42,
+        4,
+        4,
+        0,
+        3,
+        0,
+        0
+      ],
+      [
+        6,
+        38,
+        5,
+        3,
+        4,
+        1,
+        0
+      ],
+      [
+        1,
+        5,
+        41,
+        3,
+        3,
+        2,
+        0
+      ],
+      [
+        0,
+        3,
+        5,
+        41,
+        6,
+        2,
+        1
+      ],
+      [
+        0,
+        5,
+        2,
+        9,
+        52,
+        2,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        3,
+        0,
+        56,
+        0
+      ],
+      [
+        0,
+        1,
+        0,
+        1,
+        0,
+        0,
+        63
+      ]
+    ]
+  },
+  "demo_profiles": {
+    "Active student, healthy habits": {
+      "label": "Insufficient_Weight",
+      "top3": {
+        "Insufficient_Weight": 0.486735999584198,
+        "Normal_Weight": 0.48064106702804565,
+        "Overweight_Level_II": 0.011275856755673885
+      }
+    },
+    "Office worker, sedentary": {
+      "label": "Overweight_Level_II",
+      "top3": {
+        "Overweight_Level_II": 0.586920976638794,
+        "Obesity_Type_II": 0.40548181533813477,
+        "Overweight_Level_I": 0.00376258441247046
+      }
+    },
+    "High-risk habits": {
+      "label": "Obesity_Type_III",
+      "top3": {
+        "Obesity_Type_III": 0.9965258240699768,
+        "Normal_Weight": 0.002766186138615012,
+        "Obesity_Type_I": 0.00038252444937825203
+      }
+    }
+  }
+}

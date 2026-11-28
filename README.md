@@ -39,7 +39,10 @@ Aplicación de escritorio (CustomTkinter) que usa el modelo ganador (`modelos/mo
 uv sync          # crea .venv e instala las dependencias fijadas en uv.lock
 uv run app       # abre la ventana "Clasificador de Obesidad"
 uv run pytest    # ejecuta las pruebas
+uv run --group eval python scripts/evaluar_app.py   # mide la app con el conjunto de prueba del notebook
 ```
+
+La evaluación reproduce las métricas del notebook (exactitud 0.7967, F1 macro 0.7939). El procedimiento y los resultados están en `docs/EVALUACION_APP.md`.
 
 ### Notas
 
