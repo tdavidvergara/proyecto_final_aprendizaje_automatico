@@ -1,0 +1,20 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Borradores locales no versionados
+Informe_Estado_del_Arte.md
+Informe_Estado_del_Arte_Diabetes.md
+Informe_Estado_del_Arte_Texto_Limpio.txt
