@@ -26,7 +26,7 @@ The team needs a usable front for the final project. The repo already exports th
 
 - [x] T1 — `app_obesidad/core.py`: load model + metrics JSON, map friendly inputs to the model's 17 columns, return predicted class + per-class probabilities. Tests in `tests/test_core.py` (RED → GREEN).
 - [x] T2 — `app_obesidad/app.py`: CustomTkinter GUI with inputs driven by `metricas_ganador.json` ranges, Classify/Reset, probability bars for the 7 classes, model info sidebar.
-- [ ] T3 — `pyproject.toml` (`[project.scripts] app = ...`), `uv run app` works; README section "App de escritorio".
+- [x] T3 — `pyproject.toml` (`[project.scripts] app = ...`), `uv run app` works; README section "App de escritorio".
 
 ## Acceptance criteria
 
@@ -53,3 +53,5 @@ The team needs a usable front for the final project. The repo already exports th
 - 2026-11-28: feature document created; branch created.
 - 2026-11-28: T1 done (delegated writer). RED observed (ImportError: cannot import `core`), then GREEN: `uv run pytest -q` -> 29 passed. Commit `1e7385f`. Out-of-range policy: reject with ValueError.
 - 2026-11-28: T2 done (delegated writer). GUI smoke: window built with title "Clasificador de Obesidad", classify -> "Sobrepeso nivel I" with probabilities summing to 1.0, reset restores defaults, window destroyed after 1 s via `after()`. Test-first exception: GUI logic is thin and covered by the smoke run; model logic is tested in T1. Commit `06a449d`.
+- 2026-11-28: T3 done (delegated writer). `pyproject.toml` (hatchling, packages `app_obesidad` + `src`, `app = "app_obesidad.app:main"`), `uv.lock`, README "App de escritorio". Pins: scikit-learn 1.6.1 and xgboost 3.4.1 from Notebook_Matriz.ipynb cell 3 output; pickle loads with no InconsistentVersionWarning. Checks: `uv run pytest -q` -> 29 passed; `core.predict` sample -> Normal_Weight, 7 probs sum 1.0; GUI import ok; window built and destroyed via `after(1000)`. `app.exe` entry point present in `.venv/Scripts`; interactive `uv run app` not launched (would block). Commit `0c9fa3e`.
+- Next: user runs `uv run app` interactively; decide on PR / delivery and on the Gender/Age open note.
