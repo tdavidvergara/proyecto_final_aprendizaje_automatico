@@ -31,9 +31,19 @@ MODELS_DIR = REPO_ROOT / "modelos"
 MODEL_PATH = MODELS_DIR / "modelo_ganador.pkl"
 METADATA_PATH = MODELS_DIR / "metricas_ganador.json"
 
-# The pickle references `src.p2_habitos.agregar_habitos`; keep the repo root importable.
+# Older pickles reference `src.p2_habitos.agregar_habitos`; keep the repo root importable.
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
+
+from src import p2_habitos  # noqa: E402  (needs the repo root on sys.path)
+
+# The current winner was pickled from `Notebook_Matriz.ipynb`, so its P2 FunctionTransformer
+# references `__main__.agregar_habitos` and `__main__.nombres_con_habitos`
+# (see docs/GUIA_DESPLIEGUE_INTERFAZ.md, section 4).
+P2_MAIN_CALLABLES: Dict[str, Any] = {
+    "agregar_habitos": p2_habitos.agregar_habitos,
+    "nombres_con_habitos": p2_habitos._nombres_con_habitos,
+}
 
 BINARY_MAPS: Dict[str, Dict[str, int]] = {
     "Gender": {"Female": 0, "Male": 1},
@@ -107,9 +117,21 @@ def _portable_xgboost_unpickling() -> Iterator[None]:
         Booster.__setstate__ = original_setstate
 
 
+def register_p2_on_main() -> None:
+    """Expose the P2 callables on `__main__` so notebook-pickled pipelines can be unpickled.
+
+    Attributes that `__main__` already defines are left untouched.
+    """
+    main_module = sys.modules["__main__"]
+    for name, function in P2_MAIN_CALLABLES.items():
+        if not hasattr(main_module, name):
+            setattr(main_module, name, function)
+
+
 @lru_cache(maxsize=1)
 def load_model(path: Path = MODEL_PATH):
     """Load the winning sklearn pipeline (cached after the first call)."""
+    register_p2_on_main()
     with _portable_xgboost_unpickling():
         return joblib.load(path)
 

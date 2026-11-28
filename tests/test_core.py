@@ -37,6 +37,18 @@ def test_model_and_metadata_load():
     assert len(metadata["clases"]) == 7
 
 
+def test_p2_callables_are_registered_on_main_without_clobbering(monkeypatch):
+    import sys
+
+    main_module = sys.modules["__main__"]
+    sentinel = object()
+    monkeypatch.delattr(main_module, "agregar_habitos", raising=False)
+    monkeypatch.setattr(main_module, "nombres_con_habitos", sentinel, raising=False)
+    core.register_p2_on_main()
+    assert main_module.agregar_habitos is core.P2_MAIN_CALLABLES["agregar_habitos"]
+    assert main_module.nombres_con_habitos is sentinel
+
+
 def test_class_names_follow_metadata_order():
     assert core.class_names() == [
         "Insufficient_Weight", "Normal_Weight", "Overweight_Level_I", "Overweight_Level_II",

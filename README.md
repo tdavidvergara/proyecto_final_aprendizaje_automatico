@@ -44,5 +44,6 @@ uv run pytest    # ejecuta las pruebas
 ### Notas
 
 - `scikit-learn==1.6.1` y `xgboost==3.4.1` están fijados a las versiones con las que `Notebook_Matriz.ipynb` guardó el modelo.
+- El modelo se guardó desde `Notebook_Matriz.ipynb`, por lo que su paso P2 referencia `__main__.agregar_habitos` y `__main__.nombres_con_habitos`. `app_obesidad/core.py` los registra desde `src/p2_habitos.py` antes de cargar el `.pkl` (ver `docs/GUIA_DESPLIEGUE_INTERFAZ.md`, sección 4).
 - El modelo se guardó en Linux (Colab). `app_obesidad/core.py` reconstruye el booster de XGBoost a partir de su sección portable "Model" para que cargue en Windows.
 - El instalador (.exe con PyInstaller / Inno Setup) está fuera del alcance por ahora.
